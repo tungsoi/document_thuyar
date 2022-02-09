@@ -13,21 +13,12 @@ class HomeController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title('Dashboard')
-            ->description('Description...')
-            ->row(Dashboard::title())
+            ->header('Trang chủ')
             ->row(function (Row $row) {
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
+                $row->column(12, function (Column $column) {
+                    // $type = TypeContract::where('status', 1)->get();
+                    // $address = AddressContract::where('status', 1)->get();
+                    $column->append(view('search'));
                 });
             });
     }

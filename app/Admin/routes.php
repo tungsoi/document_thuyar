@@ -15,6 +15,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('', 'HomeController@index')->name('home');
+    $router->post('search', 'DocumentController@search')->name('document.search');
     $router->resources([
         'categories'    =>  CategoryController::class,
         'documents'     =>  DocumentController::class

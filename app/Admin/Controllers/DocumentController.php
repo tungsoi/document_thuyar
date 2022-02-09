@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Http\Request;
 
 class DocumentController extends AdminController
 {
@@ -26,7 +27,7 @@ class DocumentController extends AdminController
     {
         $grid = new Grid(new Document());
 
-        $grid->filter(function($filter) {
+        $grid->filter(function ($filter) {
             $filter->expand();
             $filter->disableIdFilter();
 
@@ -34,7 +35,7 @@ class DocumentController extends AdminController
         });
 
         $grid->rows(function (Grid\Row $row) {
-            $row->column('number', ($row->number+1));
+            $row->column('number', ($row->number + 1));
         });
         $grid->column('number', 'STT');
         $grid->title('Tên danh mục');
@@ -84,5 +85,16 @@ class DocumentController extends AdminController
         $form->display('updated_at', 'Ngày cập nhật');
 
         return $form;
+    }
+
+    public function search(Request $request)
+    {
+        $contact  = Document::query();
+        if ($request->has('title')) {
+            $contact->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+        $result = $contact->get();
+        $request->session()->flash('result', $result);
+        return redirect()->back()->withInput();
     }
 }
