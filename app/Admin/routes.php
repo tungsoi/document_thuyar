@@ -2,6 +2,9 @@
 
 use Illuminate\Routing\Router;
 
+Route::get('', 'App\\Http\\Controllers\\HomeController@index');
+
+
 Admin::routes();
 
 Route::group([
@@ -11,6 +14,9 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index')->name('home');
-
+    $router->get('', 'HomeController@index')->name('home');
+    $router->resources([
+        'categories'    =>  CategoryController::class,
+        'documents'     =>  DocumentController::class
+    ]);
 });
